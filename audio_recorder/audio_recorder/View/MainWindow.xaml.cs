@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using System.Windows.Shapes;
 using NAudio.Wave;
 
 namespace audio_recorder
@@ -24,8 +23,8 @@ namespace audio_recorder
     public partial class MainWindow : Window
     {
         private WaveIn waveInput;
-        private StackPanel outPanel;
-        private bool HasPanel = false;
+        private static int discretizationFrequency = 4000;
+        private static int nChannel = 1;
 
 //DEBUG WaveFileWriter writer;
 //DEBUG string outputFilename = "имя_файла.wav";
@@ -65,22 +64,6 @@ namespace audio_recorder
 
         private void Draw( WaveInEventArgs e )
         {
-            if (!HasPanel)
-            {
-                outPanel = new StackPanel();
-                outPanel.Width = 600;
-                outPanel.Height = 200;
-                outPanel.Margin = new Thickness(-200, -200, 0, 0);
-
-                SolidColorBrush backGroundBrush = new SolidColorBrush();
-                backGroundBrush.Color = Color.FromRgb(0, 0, 0);
-                outPanel.Background = backGroundBrush;
-
-                var MainWindowGrid = this.Content as Grid;
-                MainWindowGrid.Children.Add(outPanel);
-                HasPanel = true;
-            }
-
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
             mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
 
@@ -98,7 +81,7 @@ namespace audio_recorder
                 var amplitude = e.Buffer[x];
                 myEllipse.Margin = new Thickness( amplitude, 0, 0, 0);
 
-                outPanel.Children.Add(myEllipse);
+                m_graphicStackPannel.Children.Add(myEllipse);
             }
 
             //for( int x = 0; x < e.Buffer.Count(); ++x )
@@ -127,11 +110,12 @@ namespace audio_recorder
             try
             {
                 MessageBox.Show("Start Recording");
+                stopButton.IsEnabled = true;
                 waveInput = new WaveIn();
                 waveInput.DeviceNumber = 0;
                 waveInput.DataAvailable += waveIn_DataAvailable;
                 waveInput.RecordingStopped += waveInput_RecordingStopped;
-                waveInput.WaveFormat = new WaveFormat(8000, 1);
+                waveInput.WaveFormat = new WaveFormat(discretizationFrequency, nChannel);
 
 //DEBUG         writer = new WaveFileWriter(outputFilename, waveInput.WaveFormat);
 
@@ -146,7 +130,9 @@ namespace audio_recorder
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
             waveInput.StopRecording();
+            stopButton.IsEnabled = false;
             MessageBox.Show("StopRecording");
         }
+
     }
 }

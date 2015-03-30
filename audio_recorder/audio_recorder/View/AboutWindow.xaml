@@ -1,0 +1,28 @@
+﻿<Window x:Class="audio_recorder.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" 
+        Height="230" Width="480" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" 
+        Uid="About" 
+        Icon="{Binding Mode=OneWay, Source={StaticResource logo}}">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,10">
+            <GradientStop Color="#bbacadad" Offset="0"/>
+            <GradientStop Color="#bb7a7b7b" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Margin="15,15,15,0" Height="173" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Margin="5,10,0,-5">
+            <Label Content="Course work" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Georgia" />
+            <Label Content="Theme: Spectral analysis of sound" FontFamily="Georgia" />
+            <Label Content="Students of group CI-12-2" FontFamily="Georgia" />
+            <Label Content="Vladislav Tikhonenko" HorizontalAlignment="Right" Width="149" FontStyle="Italic" FontFamily="Georgia" />
+            <Label Content="Kirill Oleynik" HorizontalAlignment="Right" Width="149" FontStyle="Italic" FontFamily="Georgia" />
+            <Label Content="Viktor Smachtin" HorizontalAlignment="Right" Width="150" FontStyle="Italic" FontFamily="Georgia" />
+        </StackPanel>
+    </Grid>
+</Window>

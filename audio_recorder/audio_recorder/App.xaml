@@ -1,8 +1,16 @@
 ﻿<Application x:Class="audio_recorder.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             StartupUri="View/MainWindow.xaml" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
-         
+        
+    <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
+            <ResourceDictionary Source="Resources/Themes/Core.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
+            <BitmapImage x:Key="logo" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="C:\Users\Kirillo\Desktop\system_software_engineering\audio_recorder\audio_recorder\Resources\Images\logo.jpg"/>
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>
