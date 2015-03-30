@@ -20,7 +20,7 @@
             <Label Content="Course work" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Georgia" />
             <Label Content="Theme: Spectral analysis of sound" FontFamily="Georgia" />
             <Label Content="Students of group CI-12-2" FontFamily="Georgia" />
-            <Label Content="Vladislav Tikhonenko" HorizontalAlignment="Right" Width="149" FontStyle="Italic" FontFamily="Georgia" />
+            <Label Content="Vladyslav Tykhonenko" HorizontalAlignment="Right" Width="149" FontStyle="Italic" FontFamily="Georgia" />
             <Label Content="Kirill Oleynik" HorizontalAlignment="Right" Width="149" FontStyle="Italic" FontFamily="Georgia" />
             <Label Content="Viktor Smachtin" HorizontalAlignment="Right" Width="150" FontStyle="Italic" FontFamily="Georgia" />
         </StackPanel>
