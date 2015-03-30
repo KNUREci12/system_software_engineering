@@ -35,9 +35,12 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <StackPanel x:Name="m_graphicStackPannel" Grid.Row="1" Margin="20,20,20,60" Background="Black" ToolTip="Sound's spectr" />
+            <!--<StackPanel x:Name="m_graphicStackPannel" Grid.Row="1" Margin="20,20,20,60" Background="Black" ToolTip="Sound's spectr" />-->
+
+            <WindowsFormsHost Name="windowsFormsHost" Grid.Row="1" Margin="20,20,20,60" Grid.RowSpan="2" />
             <Button x:Name="startButton" Grid.Row="2" Grid.Column="0" Content="start" HorizontalAlignment="Left" Margin="29,0,0,23" Width="75" Click="startButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="start"/>
             <Button x:Name="stopButton" Grid.Row="2" Grid.Column="1" Content="stop" HorizontalAlignment="Left" Margin="173,0,0,23" Width="75" Click="stopButton_Click" ToolTip="stop" Height="20" VerticalAlignment="Bottom" IsCancel="True" IsEnabled="False"/>
+
             <!--<ToolBar  Grid.Row="2" Grid.Column="3" >
                 <Button >
                 </Button>

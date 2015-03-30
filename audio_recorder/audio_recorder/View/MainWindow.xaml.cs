@@ -23,7 +23,7 @@ namespace audio_recorder
     public partial class MainWindow : Window
     {
         private WaveIn waveInput;
-        private static int discretizationFrequency = 4000;
+        private static int discretizationFrequency = 44100;
         private static int nChannel = 1;
 
 //DEBUG WaveFileWriter writer;
@@ -64,25 +64,25 @@ namespace audio_recorder
 
         private void Draw( WaveInEventArgs e )
         {
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-            mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
-
-            var count = e.Buffer.Count();
-
-            for( int x = 0; x < 500; ++x )
-            {
-                Ellipse myEllipse = new Ellipse();
-
-                myEllipse.Fill = mySolidColorBrush;
-
-                myEllipse.Width = 1;
-                myEllipse.Height = 1;
-
-                var amplitude = e.Buffer[x];
-                myEllipse.Margin = new Thickness( amplitude, 0, 0, 0);
-
-                m_graphicStackPannel.Children.Add(myEllipse);
-            }
+            //SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+            //mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
+			//
+            //var count = e.Buffer.Count();
+			//
+            //for( int x = 0; x < 500; ++x )
+            //{
+            //    Ellipse myEllipse = new Ellipse();
+			//
+            //    myEllipse.Fill = mySolidColorBrush;
+			//
+            //    myEllipse.Width = 1;
+            //    myEllipse.Height = 1;
+			//
+            //    var amplitude = e.Buffer[x];
+            //    myEllipse.Margin = new Thickness( amplitude, 0, 0, 0);
+			//
+            //    m_graphicStackPannel.Children.Add(myEllipse);
+            //}
 
             //for( int x = 0; x < e.Buffer.Count(); ++x )
             //{
