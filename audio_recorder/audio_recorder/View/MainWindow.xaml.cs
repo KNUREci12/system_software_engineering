@@ -15,6 +15,12 @@ using System.Windows.Shapes;
 
 using NAudio.Wave;
 
+using ZedGraph;
+
+using System.Numerics;
+
+using audio_recorder.Spectrum_Analyzer;
+
 namespace audio_recorder
 {
     /// <summary>
@@ -22,30 +28,53 @@ namespace audio_recorder
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WaveIn waveInput;
-        private static int discretizationFrequency = 44100;
-        private static int nChannel = 1;
+		private WaveIn waveInput;
+		private static int discretizationFrequency = 44100;
+		private static int nChannel = 1;
+
+		private ZedGraphControl zedPanel;
 
 //DEBUG WaveFileWriter writer;
 //DEBUG string outputFilename = "имя_файла.wav";
 
         public MainWindow()
         {
-            InitializeComponent();
+			InitializeComponent();
+			zedPanel = new ZedGraphControl();
+			var host = this.FindName("windowsFormsHost") as System.Windows.Forms.Integration.WindowsFormsHost;
+			host.Child = zedPanel;
         }
 
         void waveIn_DataAvailable(object sender, WaveInEventArgs e)
         {
-            Draw(e);
-            if (!CheckAccess())
-            {
-                Dispatcher.Invoke(() => waveIn_DataAvailable(sender, e));
-            }
-//DEBUG     else
-//DEBUG     {
-//DEBUG         writer.WriteData(e.Buffer, 0, e.BytesRecorded);
-//DEBUG     }
+			if (!CheckAccess())
+			{
+				Dispatcher.Invoke(() => waveIn_DataAvailable(sender, e));
+			}
+			else
+			{
+				var complexSignal = FFT.fft( e.Buffer );
+				Draw( complexSignal );
+
+			}
         }
+
+		void Draw( Complex[] _signal )
+		{
+			PointPairList signalPoints = new PointPairList();
+
+			for (int freq = 0; freq < 22100; ++freq)
+				signalPoints.Add(freq, FFT.getAmplitude(_signal, freq));
+
+			GraphPane myPane;
+			myPane = zedPanel.GraphPane;
+			myPane.CurveList.Clear();
+
+			LineItem myCurve = myPane.AddCurve("", signalPoints, System.Drawing.Color.Red, SymbolType.None);
+
+			myPane.AxisChange();
+			zedPanel.Invalidate();
+		}
 
         private void waveInput_RecordingStopped(object sender, EventArgs e)
         {
