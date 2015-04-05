@@ -137,6 +137,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Spectrum Analyzer\FFT.cs" />
+    <Compile Include="Spectrum Analyzer\MicrophoneReader.cs" />
+    <Compile Include="Spectrum Analyzer\Mp3Reader.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
