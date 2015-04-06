@@ -86,9 +86,6 @@ namespace audio_recorder
             }
         }
 
-        private void Draw( WaveInEventArgs e )
-        {
-        }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {

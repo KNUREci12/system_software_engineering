@@ -5,12 +5,11 @@
     <Application.Resources>
         
     <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
+         <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="Resources/Themes/Brushes.xaml"/>
             <ResourceDictionary Source="Resources/Themes/Core.xaml"/>
         </ResourceDictionary.MergedDictionaries>
-            <BitmapImage x:Key="logo" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="E:\git\temp_git\system_software_engineering\audio_recorder\audio_recorder\Resources\Images\logo.jpg"/>
+            <BitmapImage x:Key="logo" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource ="/audio_recorder;component/Resources/Images/logo.jpg"/>
         </ResourceDictionary>
-        
     </Application.Resources>
 </Application>

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="About" 
         Height="230" Width="480" ResizeMode="NoResize" 
-        WindowStartupLocation="CenterScreen" 
+        WindowStartupLocation="CenterScreen"
+        Icon="{DynamicResource logo}"
         Uid="About" 
-        Icon="{Binding Mode=OneWay, Source={StaticResource logo}}">
+        >
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,10">
             <GradientStop Color="#bbacadad" Offset="0"/>

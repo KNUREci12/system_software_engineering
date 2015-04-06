@@ -163,13 +163,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Images\logo.jpg" />
+    <Resource Include="Resources\Images\play_button.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Images\play_button.png" />
+    <Resource Include="Resources\Images\add_folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Images\add_folder.png" />
+    <Resource Include="Resources\Images\logo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
