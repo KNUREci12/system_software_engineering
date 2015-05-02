@@ -28,11 +28,12 @@ namespace audio_recorder
     /// </summary>
     public partial class MainWindow : Window
     {
-		private WaveIn waveInput;
-		private static int discretizationFrequency = 44100;
-		private static int nChannel = 1;
 
 		private ZedGraphControl zedPanel;
+
+		private Mp3Reader fileReader;
+
+		//private MicrophoneReader mcReader;
 
         public MainWindow()
         {
@@ -42,26 +43,12 @@ namespace audio_recorder
 			host.Child = zedPanel;
         }
 
-        void waveIn_DataAvailable(object sender, WaveInEventArgs e)
-        {
-			if (!CheckAccess())
-			{
-				Dispatcher.Invoke(() => waveIn_DataAvailable(sender, e));
-			}
-			else
-			{
-				var complexSignal = FFT.fft( e.Buffer );
-				Draw( complexSignal );
-
-			}
-        }
-
 		void Draw( Complex[] _signal )
 		{
 			PointPairList signalPoints = new PointPairList();
 
 			for (int freq = 0; freq < 22100; ++freq)
-				signalPoints.Add(freq, FFT.getAmplitude(_signal, freq));
+				signalPoints.Add(freq, WindowSignal.Hann( FFT.getAmplitude(_signal, freq), 22100 ));
 
 			GraphPane myPane;
 			myPane = zedPanel.GraphPane;
@@ -73,32 +60,24 @@ namespace audio_recorder
 			zedPanel.Invalidate();
 		}
 
-        private void waveInput_RecordingStopped(object sender, EventArgs e)
-        {
-            if (!CheckAccess())
-            {
-                Dispatcher.BeginInvoke(new EventHandler(waveInput_RecordingStopped), sender, e);
-            }
-            else
-            {
-                waveInput.Dispose();
-                waveInput = null;
-            }
-        }
-
-
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                MessageBox.Show("Start Recording");
-                stopButton.IsEnabled = true;
-                waveInput = new WaveIn();
-                waveInput.DeviceNumber = 0;
-                waveInput.DataAvailable += waveIn_DataAvailable;
-                waveInput.RecordingStopped += waveInput_RecordingStopped;
-                waveInput.WaveFormat = new WaveFormat(discretizationFrequency, nChannel);
-                waveInput.StartRecording();
+				stopButton.IsEnabled = true;
+
+				fileReader = new Mp3Reader("signal.wav");
+
+				var buff = fileReader.getBuffer();
+
+				var afterFFt = FFT.fft(buff);
+
+				Draw(afterFFt);
+
+				//mcReader = new MicrophoneReader();
+				//mcReader.setDraw((Complex[] _complex) => { Draw(_complex); });
+				//mcReader.Start();
+
             }
             catch (Exception ex)
             {
@@ -108,9 +87,7 @@ namespace audio_recorder
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
-            waveInput.StopRecording();
-            stopButton.IsEnabled = false;
-            MessageBox.Show("StopRecording");
+			//mcReader.Stop();
         }
 
     }

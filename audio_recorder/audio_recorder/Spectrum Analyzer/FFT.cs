@@ -21,7 +21,7 @@ namespace audio_recorder.Spectrum_Analyzer
 		)
 		{
 			int index = Convert.ToInt32( _freq * _fft.Length / discretizationFrequency );
-			return _fft[ index ].Magnitude * 2 / _fft.Length;
+			return _fft[index].Magnitude *2 / _fft.Length;
 		}
 
 		public static Complex[] fft(Byte[] _buffer)
