@@ -21,7 +21,32 @@ namespace audio_recorder.Spectrum_Analyzer
 		)
 		{
 			int index = Convert.ToInt32( _freq * _fft.Length / discretizationFrequency );
-			return _fft[index].Magnitude *2 / _fft.Length;
+			//return _fft[index].Magnitude *2 / _fft.Length;
+			var magnitude = _fft[index].Magnitude;
+			var imaginary = _fft[index].Imaginary;
+			return Math.Sqrt(magnitude * magnitude) + Math.Sqrt(imaginary * imaginary);
+			//return magnitude * magnitude + imaginary * imaginary;
+		}
+
+		public static int getIndex(
+				NAudio.Dsp.Complex[] _fft
+			,	int _freq
+		)
+		{
+			return Convert.ToInt32(_freq * _fft.Length / discretizationFrequency);
+		}
+
+		public static double getAmplitude(
+				NAudio.Dsp.Complex[] _fft
+			,	int _freq
+		)
+		{
+			int index = getIndex(_fft, _freq);
+			//return _fft[index].Magnitude *2 / _fft.Length;
+			var magnitude = _fft[index].X;
+			var imaginary = _fft[index].Y;
+			return Math.Sqrt(magnitude * magnitude + imaginary * imaginary);
+			//return magnitude * magnitude + imaginary * imaginary;
 		}
 
 		public static Complex[] fft(Byte[] _buffer)
@@ -47,7 +72,7 @@ namespace audio_recorder.Spectrum_Analyzer
 		}
 
 
-		private static Complex[] convertSignal(
+		public static Complex[] convertSignal(
 				Byte[] _buffer
 			,	int _samplingFrequency = defaultSamplingFrequency // add check 2^n
 		)
@@ -56,8 +81,6 @@ namespace audio_recorder.Spectrum_Analyzer
 
 			for( int i = 0; i < complexSignal.Length; ++i )
 			{
-				var leftPart = _buffer[ i * 2 + 1 ] << 8;
-				var rightPart = _buffer[i * 2];
 				short sample = ( short )( ( _buffer[ i + 1 ] << 8 ) | _buffer[ i + 0 ] );
 				complexSignal[ i ] = sample / 32768f;
 			}

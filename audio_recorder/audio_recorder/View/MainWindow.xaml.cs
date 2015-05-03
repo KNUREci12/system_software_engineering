@@ -48,7 +48,27 @@ namespace audio_recorder
 			PointPairList signalPoints = new PointPairList();
 
 			for (int freq = 0; freq < 22100; ++freq)
-				signalPoints.Add(freq, WindowSignal.Hann( FFT.getAmplitude(_signal, freq), 22100 ));
+				signalPoints.Add(freq, FFT.getAmplitude(_signal, freq));
+				//signalPoints.Add(freq, WindowSignal.Hann( FFT.getAmplitude(_signal, freq), 22100 ));
+
+			GraphPane myPane;
+			myPane = zedPanel.GraphPane;
+			myPane.CurveList.Clear();
+
+			LineItem myCurve = myPane.AddCurve("", signalPoints, System.Drawing.Color.Red, SymbolType.None);
+
+			myPane.AxisChange();
+			zedPanel.Invalidate();
+		}
+
+		void Draw(NAudio.Dsp.Complex[] _signal)
+		{
+			PointPairList signalPoints = new PointPairList();
+
+			for (int freq = 0; freq < 22100; ++freq)
+				//signalPoints.Add(freq, FFT.getAmplitude(_signal, freq));
+				signalPoints.Add(freq, FFT.getAmplitude(_signal, freq) * NAudio.Dsp.FastFourierTransform.HammingWindow(FFT.getIndex(_signal, freq), _signal.Length));
+			//signalPoints.Add(freq, WindowSignal.Hann( FFT.getAmplitude(_signal, freq), 22100 ));
 
 			GraphPane myPane;
 			myPane = zedPanel.GraphPane;
@@ -68,10 +88,23 @@ namespace audio_recorder
 
 				fileReader = new Mp3Reader("signal.wav");
 
-				var buff = fileReader.getBuffer();
+				Byte[] buff = fileReader.getBuffer();
+
+				var comp = FFT.convertSignal(buff);
+
+				NAudio.Dsp.Complex[] naudioComplex = new NAudio.Dsp.Complex[comp.Length];
+
+				for( int i = 0; i < comp.Length; ++i )
+				{
+					naudioComplex[ i ].X = (float)comp[i].Magnitude;
+					naudioComplex[ i ].Y = (float)comp[i].Imaginary;
+				}
+
+				//NAudio.Dsp.FastFourierTransform.FFT(false, 12, naudioComplex);
 
 				var afterFFt = FFT.fft(buff);
 
+				//Draw(naudioComplex);
 				Draw(afterFFt);
 
 				//mcReader = new MicrophoneReader();
