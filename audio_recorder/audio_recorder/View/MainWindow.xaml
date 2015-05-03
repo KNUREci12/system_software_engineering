@@ -20,8 +20,8 @@
         </Grid.RowDefinitions>
         <Menu IsMainMenu="True" Background="{x:Null}" Height="20" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding Source={StaticResource headerMenuCommands}}">
             <MenuItem Header="File">
-                <MenuItem Header="Add exist .wav file" Command="{Binding AddExistingFile}" />
-                <MenuItem Header="Save current data" Command="{Binding SaveCurrentFile}" />
+                <MenuItem Header="Add exist audio file" Command="{Binding AddExistingFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
+                <MenuItem Header="Save main file" Command="{Binding SaveCurrentFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}"/>
             </MenuItem>
@@ -41,6 +41,9 @@
             <WindowsFormsHost Name="windowsFormsHost" Grid.Row="1" Margin="20,20,20,60" Grid.RowSpan="2" />
             <Button x:Name="startButton" Grid.Row="2" Grid.Column="0" Content="start" HorizontalAlignment="Left" Margin="29,0,0,23" Width="75" Click="startButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="start"/>
             <Button x:Name="stopButton" Grid.Row="2" Grid.Column="1" Content="stop" HorizontalAlignment="Left" Margin="173,0,0,23" Width="75" Click="stopButton_Click" ToolTip="stop" Height="20" VerticalAlignment="Bottom" IsCancel="True" IsEnabled="False"/>
+            <ComboBox Margin="476,356,35,23" Grid.Row="2" Grid.Column="3"  HorizontalAlignment="Right" Height="22" Width="75" VerticalAlignment="Bottom" Background="{x:Null}" IsReadOnly="True" >
+                <ComboBoxItem/>
+            </ComboBox>
 
             <!--<ToolBar  Grid.Row="2" Grid.Column="3" >
                 <Button >

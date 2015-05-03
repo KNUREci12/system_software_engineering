@@ -11,28 +11,28 @@ namespace audio_recorder.Command
     {
         public BaseCommand(Action<object> command)
         {
-            _command = command;
-            _predicate = null;
+            m_command = command;
+            m_predicate = null;
         }
 
         public BaseCommand(Action<object> command, Func<object, bool> predicate)
         {
-            _command = command;
-            _predicate = predicate;
+            m_command = command;
+            m_predicate = predicate;
         }
 
         public bool CanExecute(object parameter)
         {
-            return _predicate == null ? true : _predicate(parameter);
+            return m_predicate == null ? true : m_predicate(parameter);
         }
 
         public void Execute(object parameter)
         {
-            _command(parameter);
+            m_command(parameter);
         }
 
-        private Func<object, bool> _predicate;
-        private Action<object> _command;
+        private Func<object, bool> m_predicate;
+        private Action<object> m_command;
 
         event EventHandler ICommand.CanExecuteChanged
         {

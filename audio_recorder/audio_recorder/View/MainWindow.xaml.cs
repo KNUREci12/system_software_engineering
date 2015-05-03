@@ -4,20 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Numerics;
 
 using NAudio.Wave;
 
 using ZedGraph;
-
-using System.Numerics;
 
 using audio_recorder.Spectrum_Analyzer;
 
@@ -28,88 +20,64 @@ namespace audio_recorder
     /// </summary>
     public partial class MainWindow : Window
     {
-		private WaveIn waveInput;
-		private static int discretizationFrequency = 44100;
-		private static int nChannel = 1;
+		private ZedGraphControl m_zedPanel;
 
-		private ZedGraphControl zedPanel;
+        private DrawManager m_drawManager;
+        private MicrophoneReader m_microphoneReader;
 
         public MainWindow()
         {
 			InitializeComponent();
-			zedPanel = new ZedGraphControl();
+
+			m_zedPanel = new ZedGraphControl();
 			var host = this.FindName("windowsFormsHost") as System.Windows.Forms.Integration.WindowsFormsHost;
-			host.Child = zedPanel;
+			host.Child = m_zedPanel;
+            m_microphoneReader = new MicrophoneReader();
+            m_drawManager = new DrawManager( m_zedPanel );
         }
 
-        void waveIn_DataAvailable(object sender, WaveInEventArgs e)
+        public static readonly DependencyProperty DrawManagerProperty =
+            DependencyProperty.Register("DrawManager", typeof(DrawManager), typeof(MainWindow), new UIPropertyMetadata(null));
+
+        public DrawManager DrawManager
         {
-			if (!CheckAccess())
+            get { return m_drawManager; }
+        }
+
+        void DataAvailable(object sender, WaveInEventArgs e)
+        {
+			if( CheckAccess() )
 			{
-				Dispatcher.Invoke(() => waveIn_DataAvailable(sender, e));
+                var complexSignal = FFT.fft(e.Buffer);
+                m_drawManager.ClearCurveList();
+                m_drawManager.DrawCurve(complexSignal, System.Drawing.Color.Red);
 			}
 			else
 			{
-				var complexSignal = FFT.fft( e.Buffer );
-				Draw( complexSignal );
-
+                Dispatcher.Invoke(() => DataAvailable(sender, e));
 			}
         }
 
-		void Draw( Complex[] _signal )
-		{
-			PointPairList signalPoints = new PointPairList();
-
-			for (int freq = 0; freq < 22100; ++freq)
-				signalPoints.Add(freq, FFT.getAmplitude(_signal, freq));
-
-			GraphPane myPane;
-			myPane = zedPanel.GraphPane;
-			myPane.CurveList.Clear();
-
-			LineItem myCurve = myPane.AddCurve("", signalPoints, System.Drawing.Color.Red, SymbolType.None);
-
-			myPane.AxisChange();
-			zedPanel.Invalidate();
-		}
-
-        private void waveInput_RecordingStopped(object sender, EventArgs e)
+        private void RecordingStopped(object sender, EventArgs e)
         {
-            if (!CheckAccess())
-            {
-                Dispatcher.BeginInvoke(new EventHandler(waveInput_RecordingStopped), sender, e);
-            }
+            if( CheckAccess() )
+                m_microphoneReader.Reset();
             else
-            {
-                waveInput.Dispose();
-                waveInput = null;
-            }
+                Dispatcher.BeginInvoke(new EventHandler(RecordingStopped), sender, e);
         }
 
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                MessageBox.Show("Start Recording");
-                stopButton.IsEnabled = true;
-                waveInput = new WaveIn();
-                waveInput.DeviceNumber = 0;
-                waveInput.DataAvailable += waveIn_DataAvailable;
-                waveInput.RecordingStopped += waveInput_RecordingStopped;
-                waveInput.WaveFormat = new WaveFormat(discretizationFrequency, nChannel);
-                waveInput.StartRecording();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            stopButton.IsEnabled = true;
+            m_microphoneReader.StartRead(DataAvailable, RecordingStopped);
+            MessageBox.Show("Start Recording");
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
-            waveInput.StopRecording();
             stopButton.IsEnabled = false;
+            m_microphoneReader.StopRecording();
             MessageBox.Show("StopRecording");
         }
 

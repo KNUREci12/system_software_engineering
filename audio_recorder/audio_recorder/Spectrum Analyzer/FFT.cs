@@ -57,8 +57,7 @@ namespace audio_recorder.Spectrum_Analyzer
 			for( int i = 0; i < complexSignal.Length; ++i )
 			{
 				var leftPart = _buffer[ i * 2 + 1 ] << 8;
-				var rightPart = _buffer[i * 2];
-				short sample = ( short )( ( _buffer[ i + 1 ] << 8 ) | _buffer[ i + 0 ] );
+				short sample = ( short )( ( _buffer[ i + 1 ] << 8 ) | _buffer[ i ] );
 				complexSignal[ i ] = sample / 32768f;
 			}
 
