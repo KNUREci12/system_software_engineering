@@ -9,7 +9,8 @@
     Title="Spectral analyzer"
     MinHeight="480" MinWidth="640"
     Height="350" Width="525" Background="#333" ResizeMode="CanResizeWithGrip"
-    Icon="{DynamicResource logo}">
+    Icon="{DynamicResource logo}"
+    Closed="window_Closed">
     <Window.Resources>
         <local:HeaderMenuCommands x:Key="headerMenuCommands" />
     </Window.Resources>
@@ -18,10 +19,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Menu IsMainMenu="True" Background="{x:Null}" Height="20" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding Source={StaticResource headerMenuCommands}}">
+        <Menu Name="mainMenu" IsMainMenu="True" Background="{x:Null}" Height="20" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding Source={StaticResource headerMenuCommands}}">
             <MenuItem Header="File">
                 <MenuItem Header="Add exist audio file" Command="{Binding AddExistingFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
-                <MenuItem Header="Save main file" Command="{Binding SaveCurrentFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
+                <MenuItem Header="Start recording to .wav file" Command="{Binding StartWrittitgToFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
+                <MenuItem Header="Stop recording to .wav file" Command="{Binding StopWrittitngToFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Name="stopRecording" IsEnabled="False" />
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}"/>
             </MenuItem>

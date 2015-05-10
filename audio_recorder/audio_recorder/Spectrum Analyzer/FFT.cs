@@ -21,7 +21,7 @@ namespace audio_recorder.Spectrum_Analyzer
 		)
 		{
 			int index = Convert.ToInt32( _freq * _fft.Length / discretizationFrequency );
-			return _fft[ index ].Magnitude * 2 / _fft.Length;
+			return _fft[ index ].Magnitude;
 		}
 
 		public static Complex[] fft(Byte[] _buffer)
@@ -49,9 +49,12 @@ namespace audio_recorder.Spectrum_Analyzer
 
 		private static Complex[] convertSignal(
 				Byte[] _buffer
-			,	int _samplingFrequency = defaultSamplingFrequency // add check 2^n
+			,	int _samplingFrequency = defaultSamplingFrequency
 		)
 		{
+            if (!isPowerOfTwo(_samplingFrequency))
+                new ArgumentException("sampling frequency must be power of two");
+
 			Complex[] complexSignal = new Complex[ _samplingFrequency / 2 ];
 
 			for( int i = 0; i < complexSignal.Length; ++i )
@@ -64,5 +67,10 @@ namespace audio_recorder.Spectrum_Analyzer
 			return complexSignal;
 		}
 
+        private static bool isPowerOfTwo(int n)
+        {
+            int cmp = n & (n - 1);
+            return cmp == 0;
+        }
 	}
 }

@@ -11,7 +11,6 @@ using ZedGraph;
 namespace audio_recorder.Spectrum_Analyzer
 {
     public class DrawManager
-        :   Object
     {
         private GraphPane m_graphPanel;
         private ZedGraphControl m_zedPanel;

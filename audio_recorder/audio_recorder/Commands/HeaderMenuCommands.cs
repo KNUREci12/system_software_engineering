@@ -10,6 +10,8 @@ using System.Windows;
 
 using Microsoft.Win32;
 
+using NAudio.Wave;
+
 using audio_recorder.Spectrum_Analyzer;
 
 namespace audio_recorder.Command
@@ -42,23 +44,29 @@ namespace audio_recorder.Command
              }
          }
 
-
-         private BaseCommand m_saveCurrentFile;
-         public ICommand SaveCurrentFile
+         private BaseCommand m_startWrittitgToFile;
+         public ICommand StartWrittitgToFile
          {
              get
              {
-                 if (m_saveCurrentFile == null)
+                 if (m_startWrittitgToFile == null)
                  {
-                    m_saveCurrentFile = new BaseCommand(param =>
+                    m_startWrittitgToFile = new BaseCommand(param =>
                     {
                         try
                         {
                             var fileDialog = new SaveFileDialog();
-                            fileDialog.Filter = "mp3 files (*.mp3)|*.mp3|wav files (*.wav)|*.wav";
+                            fileDialog.Filter = "wav files (*.wav)|*.wav";
                             if( fileDialog.ShowDialog() == true )
                             {
-                                // Somehowe save current to file
+                                var mainWindow = param as MainWindow;
+                                var microphoneReader = mainWindow.MicrophoneReader;
+                                mainWindow.WaveFileWritter = new WaveFileWriter(
+                                    fileDialog.FileName
+                                  , new WaveFormat( microphoneReader.DiscretizationFrequency, microphoneReader.Channel)
+                                );
+                                var menuItem = mainWindow.mainMenu.FindName("stopRecording") as System.Windows.Controls.MenuItem;
+                                menuItem.IsEnabled = true;
                             }
                         }
                         catch( Exception _ex )
@@ -67,7 +75,37 @@ namespace audio_recorder.Command
                         }
                     });
                 }
-                return m_saveCurrentFile;
+
+                return m_startWrittitgToFile;
+             }
+         }
+
+         private BaseCommand m_stopWrittingToFile;
+         public ICommand StopWrittitngToFile
+         {
+             get
+             {
+                 if (m_stopWrittingToFile == null)
+                 {
+                     m_stopWrittingToFile = new BaseCommand(param =>
+                     {
+                         try
+                         {
+                             var mainWindow = param as MainWindow;
+
+                             mainWindow.WaveFileWritter.Dispose();
+                             mainWindow.WaveFileWritter = null;
+                             var menuItem = mainWindow.mainMenu.FindName("stopRecording") as System.Windows.Controls.MenuItem;
+                             menuItem.IsEnabled = false;
+                         }
+                         catch (Exception _ex)
+                         {
+                             System.Windows.MessageBox.Show(_ex.Message, _ex.GetType().ToString());
+                         }
+                     });
+                 }
+
+                 return m_stopWrittingToFile;
              }
          }
 

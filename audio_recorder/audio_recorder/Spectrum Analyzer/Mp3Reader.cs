@@ -10,7 +10,7 @@ namespace audio_recorder.Spectrum_Analyzer
 {
 	class Mp3Reader
 	{
-		public string m_fileName { set; private get; }
+        private string m_fileName;
 
 		private WaveStream m_waveStream;
 

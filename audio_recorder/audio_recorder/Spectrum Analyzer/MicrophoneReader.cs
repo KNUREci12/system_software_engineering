@@ -9,7 +9,7 @@ using NAudio.Wave;
 
 namespace audio_recorder.Spectrum_Analyzer
 {
-    class MicrophoneReader
+    public class MicrophoneReader
     {
         private WaveIn m_waveInput;
         private int m_discretizationFrequency = 44100;
@@ -21,7 +21,9 @@ namespace audio_recorder.Spectrum_Analyzer
             m_channel = _channel;
         }
 
-        public void StartRead(EventHandler<WaveInEventArgs> _dataAvailable, EventHandler<StoppedEventArgs> _recordingStopped)
+        public void StartRead(
+            EventHandler<WaveInEventArgs> _dataAvailable
+          , EventHandler<StoppedEventArgs> _recordingStopped )
         {
             try
             {
@@ -47,6 +49,16 @@ namespace audio_recorder.Spectrum_Analyzer
         public void StopRecording()
         {
             m_waveInput.StopRecording();
+        }
+
+        public int DiscretizationFrequency
+        {
+            get{ return m_discretizationFrequency; }
+        }
+
+        public int Channel
+        {
+            get { return m_channel; }
         }
 
     }

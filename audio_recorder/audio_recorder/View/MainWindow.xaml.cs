@@ -24,6 +24,7 @@ namespace audio_recorder
 
         private DrawManager m_drawManager;
         private MicrophoneReader m_microphoneReader;
+        private WaveFileWriter m_waveFileWriter;
 
         public MainWindow()
         {
@@ -36,22 +37,31 @@ namespace audio_recorder
             m_drawManager = new DrawManager( m_zedPanel );
         }
 
-        public static readonly DependencyProperty DrawManagerProperty =
-            DependencyProperty.Register("DrawManager", typeof(DrawManager), typeof(MainWindow), new UIPropertyMetadata(null));
+        public WaveFileWriter WaveFileWritter {
+            get{ return m_waveFileWriter; }
+            set{ m_waveFileWriter = value;  } 
+        }
 
         public DrawManager DrawManager
         {
             get { return m_drawManager; }
         }
 
-        void DataAvailable(object sender, WaveInEventArgs e)
+        public MicrophoneReader MicrophoneReader
+        {
+            get { return m_microphoneReader; }
+        }
+
+        private void DataAvailable(object sender, WaveInEventArgs e)
         {
 			if( CheckAccess() )
 			{
+                if (m_waveFileWriter != null)
+                    m_waveFileWriter.Write(e.Buffer, 0, e.BytesRecorded);
                 var complexSignal = FFT.fft(e.Buffer);
                 m_drawManager.ClearCurveList();
                 m_drawManager.DrawCurve(complexSignal, System.Drawing.Color.Red);
-			}
+			}   
 			else
 			{
                 Dispatcher.Invoke(() => DataAvailable(sender, e));
@@ -71,14 +81,18 @@ namespace audio_recorder
         {
             stopButton.IsEnabled = true;
             m_microphoneReader.StartRead(DataAvailable, RecordingStopped);
-            MessageBox.Show("Start Recording");
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
             stopButton.IsEnabled = false;
             m_microphoneReader.StopRecording();
-            MessageBox.Show("StopRecording");
+        }
+
+        private void window_Closed(object sender, EventArgs e)
+        {
+            if (m_waveFileWriter != null)
+                m_waveFileWriter.Dispose();
         }
 
     }
