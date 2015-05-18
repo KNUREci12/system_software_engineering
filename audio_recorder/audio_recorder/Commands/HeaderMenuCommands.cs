@@ -109,6 +109,7 @@ namespace audio_recorder.Command
                                         SaveRestore.Saver.Save(
                                                 mainWindow.CurrentComlexSignal
                                             ,   mainWindow.CurrentBufferSize
+                                            ,   fileDialog.FileName
                                         );
                                      }
                                  }
