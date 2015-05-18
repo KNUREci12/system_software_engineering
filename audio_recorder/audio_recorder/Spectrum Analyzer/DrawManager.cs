@@ -53,7 +53,7 @@ namespace audio_recorder.Spectrum_Analyzer
             for (int freq = 0; freq < FFT.discretizationFrequency >> 1; ++freq)
                 signalPoints.Add(freq, FFT.getAmplitude( _signal, freq, _bufferSize ) );
 
-            LineItem myCurve = m_graphPanel.AddCurve( _label, signalPoints, _color, _type );
+            m_graphPanel.AddCurve( _label, signalPoints, _color, _type );
 
             m_graphPanel.AxisChange();
             m_zedPanel.Invalidate();
@@ -82,6 +82,20 @@ namespace audio_recorder.Spectrum_Analyzer
         )
         {
             DrawCurve( _signal.Item2, _signal.Item1, this.GetAvailableColor() );
+        }
+
+        public void DrawNote(Note_Analyzer.Notes _note)
+        {
+            var freq = _note.GetFreq();
+
+            var minX = freq * 0.1f;
+            var maxX = freq * 1.1f;
+
+            Double[] x = { minX, maxX };
+            Double[] y = { -1, 1 };
+
+            m_graphPanel.AddCurve("", x, y, Color.Black );
+
         }
 
         public Color GetAvailableColor()

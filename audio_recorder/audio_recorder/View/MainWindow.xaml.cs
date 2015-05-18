@@ -30,6 +30,8 @@ namespace audio_recorder
 
         public Color MainCurve { get; set; }
 
+        private Note_Analyzer.Notes m_selectNote;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +41,8 @@ namespace audio_recorder
             host.Child = m_zedPanel;
             MicrophoneReader = new MicrophoneReader();
             DrawManager = new DrawManager(m_zedPanel);
+
+            m_selectNote = new Note_Analyzer.Notes();
         }
 
         public DrawManager DrawManager { get; private set; }
@@ -96,6 +100,27 @@ namespace audio_recorder
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
             DrawManager.Refresh();
+        }
+
+        private void showNotesButton_Click(object sender, RoutedEventArgs e)
+        {
+            DrawManager.DrawNote( this.m_selectNote );
+        }
+
+        private void octave_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            m_selectNote.OctaveValue =
+                Note_Analyzer.Notes.OctaveFromString(
+                    ( e.AddedItems[ 0 ] as System.Windows.Controls.ComboBoxItem ).Content.ToString()
+                );
+        }
+
+        private void note_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            m_selectNote.NoteValue =
+                Note_Analyzer.Notes.NoteFromString(
+                    (e.AddedItems[0] as System.Windows.Controls.ComboBoxItem).Content.ToString()
+                );
         }
 
     }

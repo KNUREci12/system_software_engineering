@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\HeaderMenuCommands.cs" />
+    <Compile Include="Note Analyzer\Notes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
