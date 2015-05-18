@@ -20,7 +20,7 @@ namespace audio_recorder.SaveRestore
         {
             using(
                 var writer = new BinaryWriter(
-                    new FileStream( _fileName, FileMode.CreateNew )
+                    new FileStream( _fileName, FileMode.Create )
                 )
             )
             {

@@ -9,8 +9,7 @@
     Title="Spectral analyzer"
     MinHeight="480" MinWidth="640"
     Height="350" Width="525" Background="#333" ResizeMode="CanResizeWithGrip"
-    Icon="{DynamicResource logo}"
-    Closed="window_Closed">
+    Icon="{DynamicResource logo}">
     <Window.Resources>
         <local:HeaderMenuCommands x:Key="headerMenuCommands" />
     </Window.Resources>
@@ -44,12 +43,10 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <!--<StackPanel x:Name="m_graphicStackPannel" Grid.Row="1" Margin="20,20,20,60" Background="Black" ToolTip="Sound's spectr" />-->
-
-            <WindowsFormsHost Name="windowsFormsHost" Grid.Row="1" Margin="20,20,20,60" Grid.ColumnSpan="2" />
+            <WindowsFormsHost Name="windowsFormsHost" Grid.Row="1" Margin="20,20,20,60" Grid.ColumnSpan="2"  ToolTip="Sound's spectr"/>
             <Button x:Name="startButton" Grid.Row="1" Grid.Column="0" Content="start" HorizontalAlignment="Left" Margin="29,0,0,23" Width="75" Click="startButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="start"/>
             <Button x:Name="stopButton" Grid.Row="1" Grid.Column="1" Content="stop" HorizontalAlignment="Left" Margin="0,0,0,23" Width="75" Click="stopButton_Click" ToolTip="stop" Height="20" VerticalAlignment="Bottom" IsCancel="True" IsEnabled="False"/>
-            <Button x:Name="refreshButton" Grid.Row="1" Grid.Column="1" Content="refresh" HorizontalAlignment="Left" Margin="99,0,0,23" Width="75" Click="refreshButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="start"/>
+            <Button x:Name="refreshButton" Grid.Row="1" Grid.Column="1" Content="refresh" HorizontalAlignment="Left" Margin="99,0,0,23" Width="75" Click="refreshButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="refresh"/>
             <ComboBox Margin="0,0,35,23" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" Height="22" Width="75" VerticalAlignment="Bottom" Background="{x:Null}" IsReadOnly="True" >
                 <ComboBoxItem/>
 
@@ -59,11 +56,6 @@
 
             </ComboBox>
 
-            <!--<ToolBar  Grid.Row="2" Grid.Column="3" >
-                <Button >
-                </Button>
-                <Separator/>
-            </ToolBar>-->
         </Grid>
     </Grid>
 </Window>
