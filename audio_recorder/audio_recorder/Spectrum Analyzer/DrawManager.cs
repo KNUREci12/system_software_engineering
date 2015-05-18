@@ -32,6 +32,7 @@ namespace audio_recorder.Spectrum_Analyzer
 
             m_pColor = 0;
             ConstrColors();
+
         }
 
         public void ClearCurveList()
@@ -95,6 +96,7 @@ namespace audio_recorder.Spectrum_Analyzer
         {
             this.ClearCurveList();
             this.m_pColor = 0;
+            m_zedPanel.Refresh();
         }
 
         private void ConstrColors()

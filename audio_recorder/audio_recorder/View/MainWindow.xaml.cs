@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Numerics;
 
+using System.Drawing;
+
 using NAudio.Wave;
 
 using ZedGraph;
@@ -25,6 +27,8 @@ namespace audio_recorder
         public Complex[] CurrentComlexSignal { get; private set; }
 
         public Int32 CurrentBufferSize { get; private set; }
+
+        public Color MainCurve { get; set; }
 
         public MainWindow()
         {
@@ -54,7 +58,7 @@ namespace audio_recorder
                 DrawManager.DrawCurve(
                         CurrentComlexSignal
                     ,   e.BytesRecorded
-                    ,   System.Drawing.Color.Red
+                    ,   MainCurve
                 );
             }
             else
@@ -87,6 +91,11 @@ namespace audio_recorder
         private void window_Closed(object sender, EventArgs e)
         {
             MicrophoneReader.StopRecording();
+        }
+
+        private void refreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            DrawManager.Refresh();
         }
 
     }
