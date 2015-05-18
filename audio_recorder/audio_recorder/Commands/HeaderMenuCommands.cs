@@ -47,41 +47,39 @@ namespace audio_recorder.Command
          {
              get
              {
-                if( AddExistingFile == null )
-                    m_addExistingFile = new BaseCommand(param => (new AboutWindow()).Show());
-                 //if( AddExistingFile == null)
-                 //{
-                 //   m_addExistingFile = new BaseCommand(
-                 //       param =>
-                 //       {
-                 //           try
-                 //           {
-                 //               var fileDialog = new OpenFileDialog();
-                 //
-                 //               fileDialog.Filter = @"fft files (*.fft)|*.fft";
-                 //               fileDialog.Multiselect = false;
-                 //
-                 //               if( fileDialog.ShowDialog() == true )
-                 //               {
-                 //                   if( fileDialog.FileName != null )
-                 //                   {
-                 //                       var fftSignal =
-                 //                           SaveRestore.Restorer.RestoreFFt( fileDialog.FileName );
-                 //
-                 //                       var mainWindow = param as MainWindow;
-                 //
-                 //                       DrawManager drawManager = mainWindow.DrawManager;
-                 //                       drawManager.DrawCurve( fftSignal );
-                 //                   }
-                 //               }
-                 //           }
-                 //           catch( Exception _exception )
-                 //           {
-                 //               System.Windows.MessageBox.Show( _exception.Message );
-                 //           }
-                 //       }
-                 //   );
-                 //}
+                 if (m_addExistingFile == null)
+                 {
+                    m_addExistingFile = new BaseCommand(
+                        param =>
+                        {
+                            try
+                            {
+                                var fileDialog = new OpenFileDialog();
+
+                                fileDialog.Filter = @"fft files (*.fft)|*.fft";
+                                fileDialog.Multiselect = false;
+
+                                if( fileDialog.ShowDialog() == true )
+                                {
+                                    if( fileDialog.FileName != null )
+                                    {
+                                        var fftSignal =
+                                            SaveRestore.Restorer.RestoreFFt( fileDialog.FileName );
+
+                                        var mainWindow = param as MainWindow;
+
+                                        DrawManager drawManager = mainWindow.DrawManager;
+                                        drawManager.DrawCurve( fftSignal );
+                                    }
+                                }
+                            }
+                            catch( Exception _exception )
+                            {
+                                System.Windows.MessageBox.Show( _exception.Message );
+                            }
+                        }
+                    );
+                 }
                  return m_addExistingFile;
              }
          }

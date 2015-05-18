@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <Menu Name="mainMenu" IsMainMenu="True" Background="{x:Null}" Height="20" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding Source={StaticResource headerMenuCommands}}">
             <MenuItem Header="File">
-                <!--<MenuItem Header="Add exist sprctrum file" Command="{Binding AddExistingFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />-->
+                <MenuItem Header="Add exist sprctrum file" Command="{Binding AddExistingFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
                 <MenuItem Header="Save spectrum in file" Command="{Binding SaveFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}"/>
