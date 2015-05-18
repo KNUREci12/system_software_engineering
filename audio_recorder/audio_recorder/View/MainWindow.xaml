@@ -21,9 +21,8 @@
         </Grid.RowDefinitions>
         <Menu Name="mainMenu" IsMainMenu="True" Background="{x:Null}" Height="20" Grid.Row="1" VerticalAlignment="Top" DataContext="{Binding Source={StaticResource headerMenuCommands}}">
             <MenuItem Header="File">
-                <MenuItem Header="Add exist audio file" Command="{Binding AddExistingFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
-                <MenuItem Header="Start recording to .wav file" Command="{Binding StartWrittitgToFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
-                <MenuItem Header="Stop recording to .wav file" Command="{Binding StopWrittitngToFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Name="stopRecording" IsEnabled="False" />
+                <!--<MenuItem Header="Add exist sprctrum file" Command="{Binding AddExistingFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />-->
+                <MenuItem Header="Save spectrum in file" Command="{Binding SaveFile}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" />
                 <Separator />
                 <MenuItem Header="Exit" Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}"/>
             </MenuItem>
@@ -31,7 +30,11 @@
                 <MenuItem Header="About" Command="{Binding AboutCommand}" />
             </MenuItem>
         </Menu>
-        <Grid x:Name="___Без_имени_"  Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
+        <Grid x:Name="MainGrid"  Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="68*"/>
+                <ColumnDefinition Width="247*"/>
+            </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -40,10 +43,10 @@
 
             <!--<StackPanel x:Name="m_graphicStackPannel" Grid.Row="1" Margin="20,20,20,60" Background="Black" ToolTip="Sound's spectr" />-->
 
-            <WindowsFormsHost Name="windowsFormsHost" Grid.Row="1" Margin="20,20,20,60" Grid.RowSpan="2" />
-            <Button x:Name="startButton" Grid.Row="2" Grid.Column="0" Content="start" HorizontalAlignment="Left" Margin="29,0,0,23" Width="75" Click="startButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="start"/>
-            <Button x:Name="stopButton" Grid.Row="2" Grid.Column="1" Content="stop" HorizontalAlignment="Left" Margin="173,0,0,23" Width="75" Click="stopButton_Click" ToolTip="stop" Height="20" VerticalAlignment="Bottom" IsCancel="True" IsEnabled="False"/>
-            <ComboBox Margin="476,356,35,23" Grid.Row="2" Grid.Column="3"  HorizontalAlignment="Right" Height="22" Width="75" VerticalAlignment="Bottom" Background="{x:Null}" IsReadOnly="True" >
+            <WindowsFormsHost Name="windowsFormsHost" Grid.Row="1" Margin="20,20,20,60" Grid.ColumnSpan="2" />
+            <Button x:Name="startButton" Grid.Row="1" Grid.Column="0" Content="start" HorizontalAlignment="Left" Margin="29,0,0,23" Width="75" Click="startButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="start"/>
+            <Button x:Name="stopButton" Grid.Row="1" Grid.Column="1" Content="stop" HorizontalAlignment="Left" Margin="36.991,0,0,23" Width="75" Click="stopButton_Click" ToolTip="stop" Height="20" VerticalAlignment="Bottom" IsCancel="True" IsEnabled="False"/>
+            <ComboBox Margin="0,0,35,23" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Right" Height="22" Width="75" VerticalAlignment="Bottom" Background="{x:Null}" IsReadOnly="True" >
                 <ComboBoxItem/>
             </ComboBox>
 

@@ -24,9 +24,8 @@ namespace audio_recorder.Command
              get
              {
                  if (m_closeCommand == null)
-                 {
                      m_closeCommand = new BaseCommand(param => (param as Window).Close());
-                 }
+
                  return m_closeCommand;
              }
         }
@@ -37,75 +36,9 @@ namespace audio_recorder.Command
              get
              {
                  if (m_aboutCommand == null)
-                 {
                      m_aboutCommand = new BaseCommand(param => (new AboutWindow()).Show());
-                 }
+
                  return m_aboutCommand;
-             }
-         }
-
-         private BaseCommand m_startWrittitgToFile;
-         public ICommand StartWrittitgToFile
-         {
-             get
-             {
-                 if (m_startWrittitgToFile == null)
-                 {
-                    m_startWrittitgToFile = new BaseCommand(param =>
-                    {
-                        try
-                        {
-                            var fileDialog = new SaveFileDialog();
-                            fileDialog.Filter = "wav files (*.wav)|*.wav";
-                            if( fileDialog.ShowDialog() == true )
-                            {
-                                var mainWindow = param as MainWindow;
-                                var microphoneReader = mainWindow.MicrophoneReader;
-                                mainWindow.WaveFileWritter = new WaveFileWriter(
-                                    fileDialog.FileName
-                                  , new WaveFormat( microphoneReader.DiscretizationFrequency, microphoneReader.Channel)
-                                );
-                                var menuItem = mainWindow.mainMenu.FindName("stopRecording") as System.Windows.Controls.MenuItem;
-                                menuItem.IsEnabled = true;
-                            }
-                        }
-                        catch( Exception _ex )
-                        {
-                            System.Windows.MessageBox.Show( _ex.Message, _ex.GetType().ToString() );
-                        }
-                    });
-                }
-
-                return m_startWrittitgToFile;
-             }
-         }
-
-         private BaseCommand m_stopWrittingToFile;
-         public ICommand StopWrittitngToFile
-         {
-             get
-             {
-                 if (m_stopWrittingToFile == null)
-                 {
-                     m_stopWrittingToFile = new BaseCommand(param =>
-                     {
-                         try
-                         {
-                             var mainWindow = param as MainWindow;
-
-                             mainWindow.WaveFileWritter.Dispose();
-                             mainWindow.WaveFileWritter = null;
-                             var menuItem = mainWindow.mainMenu.FindName("stopRecording") as System.Windows.Controls.MenuItem;
-                             menuItem.IsEnabled = false;
-                         }
-                         catch (Exception _ex)
-                         {
-                             System.Windows.MessageBox.Show(_ex.Message, _ex.GetType().ToString());
-                         }
-                     });
-                 }
-
-                 return m_stopWrittingToFile;
              }
          }
 
@@ -114,40 +47,84 @@ namespace audio_recorder.Command
          {
              get
              {
-                 if (m_addExistingFile == null)
-                 {
-                     m_addExistingFile = new BaseCommand(param => 
-                     {
-                         try
-                         {
-                            var fileDialog = new OpenFileDialog();
-                            fileDialog.Filter = "mp3 files (*.mp3)|*.mp3|wav files (*.wav)|*.wav";
-                            fileDialog.Multiselect = false;
-                            if( fileDialog.ShowDialog() == true )
-                            {
-                                Mp3Reader reader = new Mp3Reader( fileDialog.FileName );
-                                var complexSignal = FFT.fft(reader.getBuffer() );
-
-                                var mainWindow = param as MainWindow;
-
-                                Color[] color = {Color.Red, Color.Blue, Color.Silver, 
-                                    Color.Yellow, Color.Green, Color.Khaki, Color.DarkViolet };
-
-                                DrawManager drawManager = mainWindow.DrawManager;
-
-                                drawManager.DrawCurve(complexSignal, color[ drawManager.CurveCount ]);
-                            }
-                         }
-                         catch( Exception _ex )
-                         {
-                             System.Windows.MessageBox.Show( _ex.Message, _ex.GetType().ToString() );
-                         }
-                     });
-                 }
+                if( AddExistingFile == null )
+                    m_addExistingFile = new BaseCommand(param => (new AboutWindow()).Show());
+                 //if( AddExistingFile == null)
+                 //{
+                 //   m_addExistingFile = new BaseCommand(
+                 //       param =>
+                 //       {
+                 //           try
+                 //           {
+                 //               var fileDialog = new OpenFileDialog();
+                 //
+                 //               fileDialog.Filter = @"fft files (*.fft)|*.fft";
+                 //               fileDialog.Multiselect = false;
+                 //
+                 //               if( fileDialog.ShowDialog() == true )
+                 //               {
+                 //                   if( fileDialog.FileName != null )
+                 //                   {
+                 //                       var fftSignal =
+                 //                           SaveRestore.Restorer.RestoreFFt( fileDialog.FileName );
+                 //
+                 //                       var mainWindow = param as MainWindow;
+                 //
+                 //                       DrawManager drawManager = mainWindow.DrawManager;
+                 //                       drawManager.DrawCurve( fftSignal );
+                 //                   }
+                 //               }
+                 //           }
+                 //           catch( Exception _exception )
+                 //           {
+                 //               System.Windows.MessageBox.Show( _exception.Message );
+                 //           }
+                 //       }
+                 //   );
+                 //}
                  return m_addExistingFile;
              }
          }
 
+         private BaseCommand m_saveFile;
+         public ICommand SaveFile
+         {
+             get
+             {
+                 if (m_saveFile == null)
+                 {
+                     m_saveFile = new BaseCommand(
+                         param =>
+                         {
+                             try
+                             {
+                                 var fileDialog = new SaveFileDialog();
+
+                                 fileDialog.Filter = @"fft files (*.fft)|*.fft";
+
+                                 if (fileDialog.ShowDialog() == true)
+                                 {
+                                     if (fileDialog.FileName != null)
+                                     {
+                                        var mainWindow = param as MainWindow;
+
+                                        SaveRestore.Saver.Save(
+                                                mainWindow.CurrentComlexSignal
+                                            ,   mainWindow.CurrentBufferSize
+                                        );
+                                     }
+                                 }
+                             }
+                             catch (Exception _exception)
+                             {
+                                 System.Windows.MessageBox.Show(_exception.Message);
+                             }
+                         }
+                     );
+                 }
+                 return m_saveFile;
+             }
+         }
 
     }
 }

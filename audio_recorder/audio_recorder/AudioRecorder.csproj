@@ -137,10 +137,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SaveRestore\Restorer.cs" />
+    <Compile Include="SaveRestore\Saver.cs" />
+    <Compile Include="Spectrum Analyzer\ComlexConvertor.cs" />
     <Compile Include="Spectrum Analyzer\DrawManager.cs" />
     <Compile Include="Spectrum Analyzer\FFT.cs" />
     <Compile Include="Spectrum Analyzer\MicrophoneReader.cs" />
-    <Compile Include="Spectrum Analyzer\Mp3Reader.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>

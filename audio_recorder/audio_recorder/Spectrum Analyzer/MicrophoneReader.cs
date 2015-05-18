@@ -12,13 +12,13 @@ namespace audio_recorder.Spectrum_Analyzer
     public class MicrophoneReader
     {
         private WaveIn m_waveInput;
-        private int m_discretizationFrequency = 44100;
-        private int m_channel = 1;
+        public Int32 DiscretizationFrequency { get; private set; }
+        public Int32 Сhannel { get; private set; }
 
-        public MicrophoneReader(int _discretizationFrequency = 44100, int _channel = 1)
+        public MicrophoneReader( int _discretizationFrequency = 44100, int _channel = 1 )
         {
-            m_discretizationFrequency = _discretizationFrequency;
-            m_channel = _channel;
+            DiscretizationFrequency = _discretizationFrequency;
+            Сhannel = _channel;
         }
 
         public void StartRead(
@@ -31,7 +31,7 @@ namespace audio_recorder.Spectrum_Analyzer
                 m_waveInput.DeviceNumber = 0;
                 m_waveInput.DataAvailable += _dataAvailable;
                 m_waveInput.RecordingStopped += _recordingStopped;
-                m_waveInput.WaveFormat = new WaveFormat(m_discretizationFrequency, m_channel);
+                m_waveInput.WaveFormat = new WaveFormat(DiscretizationFrequency, Сhannel);
                 m_waveInput.StartRecording();
             }
             catch (Exception ex)
@@ -49,16 +49,6 @@ namespace audio_recorder.Spectrum_Analyzer
         public void StopRecording()
         {
             m_waveInput.StopRecording();
-        }
-
-        public int DiscretizationFrequency
-        {
-            get{ return m_discretizationFrequency; }
-        }
-
-        public int Channel
-        {
-            get { return m_channel; }
         }
 
     }

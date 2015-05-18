@@ -10,67 +10,73 @@ using AForge;
 
 namespace audio_recorder.Spectrum_Analyzer
 {
-	static class FFT
-	{
-		public const int defaultSamplingFrequency = 8192;
-		public static int discretizationFrequency = 44100;
+    static class FFT
+    {
+        public const int defaultSamplingFrequency = 8192;
+        public static int discretizationFrequency = 44100;
 
-		public static double getAmplitude(
-				Complex[] _fft
-			,	int _freq
-		)
-		{
-			int index = Convert.ToInt32( _freq * _fft.Length / discretizationFrequency );
-			return _fft[ index ].Magnitude;
-		}
+        public static double getAmplitude(
+                Complex[] _fft
+            ,   Int32 _freq
+            ,   Int32 _bufferSize
+        )
+        {
+            int index = Convert.ToInt32( _freq * _fft.Length / discretizationFrequency );
 
-		public static Complex[] fft(Byte[] _buffer)
-		{
-			return fft( convertSignal( _buffer ) );
-		}
+            return _fft[index].Magnitude / _bufferSize * 2;
+        }
 
-		public static Complex[] fft(Complex[] _signal)
-		{
-			AForge.Math.Complex[] afSignal = new AForge.Math.Complex[ _signal.Length ];
+        public static Complex[] fft(Byte[] _buffer)
+        {
+            return fft( convertSignal( _buffer ) );
+        }
 
-			Complex[] afterFFt = new Complex[ _signal.Length ];
+        public static Complex[] fft(Complex[] _signal)
+        {
+            AForge.Math.Complex[] afSignal = new AForge.Math.Complex[ _signal.Length ];
 
-			for( int i = 0; i < _signal.Length; ++i )
-				afSignal[ i ] = new AForge.Math.Complex( _signal[ i ].Real, _signal[ i ].Imaginary );
+            for( int i = 0; i < _signal.Length; ++i )
+                afSignal[ i ] = _signal[ i ].ToAForgeComplex();
 
-			AForge.Math.FourierTransform.FFT( afSignal, AForge.Math.FourierTransform.Direction.Forward );
+            AForge.Math.FourierTransform.FFT(
+                    afSignal
+                ,   AForge.Math.FourierTransform.Direction.Forward
+            );
 
-			for( int i = 0; i < afterFFt.Length; ++i )
-				afterFFt[ i ] = new Complex( afSignal[ i ].Re, afSignal[ i ].Im );
+            Complex[] afterFFt = new Complex[_signal.Length];
 
-			return afterFFt;
-		}
+            for( int i = 0; i < afterFFt.Length; ++i )
+                afterFFt[ i ] = afSignal[ i ].ToComplex();
+
+            return afterFFt;
+        }
 
 
-		private static Complex[] convertSignal(
-				Byte[] _buffer
-			,	int _samplingFrequency = defaultSamplingFrequency
-		)
-		{
-            if (!isPowerOfTwo(_samplingFrequency))
-                new ArgumentException("sampling frequency must be power of two");
+        private static Complex[] convertSignal(
+                Byte[] _buffer
+            ,   int _samplingFrequency = defaultSamplingFrequency
+        )
+        {
+            if( !isPowerOfTwo( _samplingFrequency ) )
+                new ArgumentException( @"sampling frequency must be power of two" );
 
-			Complex[] complexSignal = new Complex[ _samplingFrequency / 2 ];
+            Complex[] complexSignal = new Complex[ _samplingFrequency / 2 ];
 
-			for( int i = 0; i < complexSignal.Length; ++i )
-			{
-				var leftPart = _buffer[ i * 2 + 1 ] << 8;
-				short sample = ( short )( ( _buffer[ i + 1 ] << 8 ) | _buffer[ i ] );
-				complexSignal[ i ] = sample / 32768f;
-			}
+            for( int i = 0; i < complexSignal.Length; ++i )
+            {
+                var leftPart = _buffer[ i * 2 + 1 ] << 8;
 
-			return complexSignal;
-		}
+                short sample = (short)( ( leftPart ) | _buffer[i]);
+
+                complexSignal[ i ] = sample / 32768f;
+            }
+
+            return complexSignal;
+        }
 
         private static bool isPowerOfTwo(int n)
         {
-            int cmp = n & (n - 1);
-            return cmp == 0;
+            return ( n & (n - 1) ) == 0;
         }
-	}
+    }
 }
