@@ -42,6 +42,18 @@ namespace audio_recorder.Command
              }
          }
 
+         //private BaseCommand m_settingsCommand;
+         //public ICommand SettingsCommand
+         //{
+         //    get
+         //    {
+         //        if (m_settingsCommand == null)
+         //            m_settingsCommand = new BaseCommand(param => (new SettingsWindow()).Show());
+         //
+         //        return m_settingsCommand;
+         //    }
+         //}
+
          private BaseCommand m_addExistingFile;
          public ICommand AddExistingFile
          {
