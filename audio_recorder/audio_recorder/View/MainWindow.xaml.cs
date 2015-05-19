@@ -74,8 +74,11 @@ namespace audio_recorder
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            stopButton.IsEnabled = true;
-            MicrophoneReader.StartRead(DataAvailable, RecordingStopped);
+            if( !stopButton.IsEnabled )
+            {
+                stopButton.IsEnabled = true;
+                MicrophoneReader.StartRead(DataAvailable, RecordingStopped);
+            }
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
@@ -83,11 +86,5 @@ namespace audio_recorder
             stopButton.IsEnabled = false;
             MicrophoneReader.StopRecording();
         }
-
-        private void window_Closed(object sender, EventArgs e)
-        {
-            MicrophoneReader.StopRecording();
-        }
-
     }
 }
