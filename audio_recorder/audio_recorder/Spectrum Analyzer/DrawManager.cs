@@ -84,27 +84,6 @@ namespace audio_recorder.Spectrum_Analyzer
             DrawCurve( _signal.Item2, _signal.Item1, this.GetAvailableColor() );
         }
 
-        public void DrawNote(Note_Analyzer.Notes _note)
-        {
-            var freq = _note.GetFreq();
-
-            var minX = freq * 0.9f;
-            var maxX = freq * 1.1f;
-
-            PointPairList points = new PointPairList();
-
-            points.Add( minX, -1 );
-            points.Add( minX, 1 );
-
-            points.Add(maxX, 1);
-            points.Add(maxX, -1);
-
-            m_zedPanel.Invalidate();
-
-            m_graphPanel.AddCurve("", points, Color.Black );
-
-        }
-
         public Color GetAvailableColor()
         {
             if ( m_colorNumber >= m_colors.Length )
