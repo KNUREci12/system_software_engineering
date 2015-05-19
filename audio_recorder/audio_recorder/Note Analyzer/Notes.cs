@@ -98,5 +98,10 @@ namespace audio_recorder.Note_Analyzer
             throw new Exception( @"uncorrect convert string to note" );
         }
 
+        public override string ToString()
+        {
+            return this.GetFreq().ToString();
+        }
+
     }
 }

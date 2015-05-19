@@ -92,6 +92,9 @@
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\HeaderMenuCommands.cs" />
     <Compile Include="Note Analyzer\Notes.cs" />
+    <Compile Include="View\NotesWindow.xaml.cs">
+      <DependentUpon>NotesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,6 +156,10 @@
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\NotesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Themes\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

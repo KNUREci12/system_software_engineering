@@ -30,7 +30,7 @@ namespace audio_recorder
 
         public Color MainCurve { get; set; }
 
-        private Note_Analyzer.Notes m_selectNote;
+        private NotesWindow m_noteWindow;
 
         public MainWindow()
         {
@@ -39,10 +39,10 @@ namespace audio_recorder
             m_zedPanel = new ZedGraphControl();
             var host = this.FindName("windowsFormsHost") as System.Windows.Forms.Integration.WindowsFormsHost;
             host.Child = m_zedPanel;
-            MicrophoneReader = new MicrophoneReader();
             DrawManager = new DrawManager(m_zedPanel);
 
-            m_selectNote = new Note_Analyzer.Notes();
+            m_noteWindow = null;
+
         }
 
         public DrawManager DrawManager { get; private set; }
@@ -61,9 +61,16 @@ namespace audio_recorder
 
                 DrawManager.DrawCurve(
                         CurrentComlexSignal
-                    ,   e.BytesRecorded
+                    ,   CurrentBufferSize
                     ,   MainCurve
                 );
+
+                if( m_noteWindow != null )
+                    m_noteWindow.NoteAnalyze(
+                            CurrentComlexSignal
+                        ,   CurrentBufferSize
+                    );
+
             }
             else
             {
@@ -82,7 +89,12 @@ namespace audio_recorder
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            if( stopButton.IsEnabled )
+                return;
+
             stopButton.IsEnabled = true;
+
+            MicrophoneReader = new MicrophoneReader();
             MicrophoneReader.StartRead(DataAvailable, RecordingStopped);
         }
 
@@ -104,23 +116,15 @@ namespace audio_recorder
 
         private void showNotesButton_Click(object sender, RoutedEventArgs e)
         {
-            DrawManager.DrawNote( this.m_selectNote );
-        }
+            if( m_noteWindow != null  )
+            {
+                m_noteWindow.Close();
+                m_noteWindow = null;
+                return;
+            }
 
-        private void octave_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            m_selectNote.OctaveValue =
-                Note_Analyzer.Notes.OctaveFromString(
-                    ( e.AddedItems[ 0 ] as System.Windows.Controls.ComboBoxItem ).Content.ToString()
-                );
-        }
-
-        private void note_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            m_selectNote.NoteValue =
-                Note_Analyzer.Notes.NoteFromString(
-                    (e.AddedItems[0] as System.Windows.Controls.ComboBoxItem).Content.ToString()
-                );
+            m_noteWindow = new NotesWindow( this );
+            m_noteWindow.Show();
         }
 
     }

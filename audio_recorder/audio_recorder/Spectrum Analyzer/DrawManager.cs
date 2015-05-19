@@ -88,13 +88,20 @@ namespace audio_recorder.Spectrum_Analyzer
         {
             var freq = _note.GetFreq();
 
-            var minX = freq * 0.1f;
+            var minX = freq * 0.9f;
             var maxX = freq * 1.1f;
 
-            Double[] x = { minX, maxX };
-            Double[] y = { -1, 1 };
+            PointPairList points = new PointPairList();
 
-            m_graphPanel.AddCurve("", x, y, Color.Black );
+            points.Add( minX, -1 );
+            points.Add( minX, 1 );
+
+            points.Add(maxX, 1);
+            points.Add(maxX, -1);
+
+            m_zedPanel.Invalidate();
+
+            m_graphPanel.AddCurve("", points, Color.Black );
 
         }
 

@@ -1,12 +1,12 @@
 ﻿<Window x:Class="audio_recorder.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SettingsWindow" Height="300" Width="300"
+        Title="SettingsWindow" Height="220" Width="220"
         Background="#333"
         >
     <Grid>
-        <Label Content="Default Color:" HorizontalAlignment="Left" Margin="16,13,0,0" VerticalAlignment="Top" Width="234" Foreground="White" Height="49"/>
-        <Rectangle x:Name="colorRect" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="114" Margin="33,72,0,0" Stroke="White" VerticalAlignment="Top" Width="114"
+        <Label Content="Default Color:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="95" Foreground="White" Height="31"/>
+        <Rectangle x:Name="colorRect" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="89" Margin="16,46,0,0" Stroke="White" VerticalAlignment="Top" Width="89"
            MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"
         />
 
