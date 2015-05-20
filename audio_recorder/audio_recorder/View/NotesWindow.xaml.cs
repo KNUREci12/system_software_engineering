@@ -80,7 +80,7 @@ namespace audio_recorder
                 ) / 15;
         }
 
-        private Int32 LocMaximum(
+        private Double LocMaximum(
                 Double _baseFreq
             ,   Complex[] _signal
             ,   Int32 _bufferSize
@@ -91,6 +91,9 @@ namespace audio_recorder
 
             Int32 index = Convert.ToInt32( _baseFreq - 10 );
             Int32 end = Convert.ToInt32(_baseFreq + 10 );
+
+            if( index > 22000 || end > 22000 )
+                return Double.NaN;
 
             for (; index < end; ++index)
             {
