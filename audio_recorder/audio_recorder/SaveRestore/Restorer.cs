@@ -30,18 +30,6 @@ namespace audio_recorder.SaveRestore
 
                 return new Tuple<int,Complex[]>( bufferSize, fft );
             }
-
         }
-
-        public static Complex ReadComplex(
-            this BinaryReader _reader
-        )
-        {
-                var real = _reader.ReadDouble();
-                var imag = _reader.ReadDouble();
-
-                return new Complex( real, imag );
-        }
-
     }
 }
