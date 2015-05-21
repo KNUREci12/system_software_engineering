@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Numerics;
 
+using System.Runtime.Serialization.Formatters.Binary;
+
 namespace audio_recorder.SaveRestore
 {
     public static class Restorer
@@ -17,21 +19,14 @@ namespace audio_recorder.SaveRestore
         )
         {
             using(
-                var reader = new BinaryReader(
-                    new FileStream( _fileName, FileMode.Open )
-                )
+                var stream = new FileStream( _fileName, FileMode.Open )
             )
             {
-                Int32 fftLength = reader.ReadInt32();
-                Int32 bufferSize = reader.ReadInt32();
+                var formatter = new BinaryFormatter();
 
-                if( fftLength < 0 || bufferSize < 0 )
-                    throw new Exception( @"uncorrect file restore." );
+                var fft = formatter.Deserialize( stream ) as Complex[];
 
-                Complex[] fft = new Complex[ fftLength ];
-
-                for (int i = 0; i < fft.Length; ++i)
-                    fft[i] = reader.ReadComplex();
+                var bufferSize = (Int32)formatter.Deserialize( stream );
 
                 return new Tuple<int,Complex[]>( bufferSize, fft );
             }
