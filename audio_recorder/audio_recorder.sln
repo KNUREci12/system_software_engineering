@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioRecorder", "audio_recorder\AudioRecorder.csproj", "{7BE64FAD-1160-4B2B-A92F-4C2D5D100777}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioRecorderUnityAdapter", "AudioRecorderUnity\AudioRecorderUnityAdapter.csproj", "{2AFCC4FE-04EB-4C4F-A99E-FE920558A8B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7BE64FAD-1160-4B2B-A92F-4C2D5D100777}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BE64FAD-1160-4B2B-A92F-4C2D5D100777}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BE64FAD-1160-4B2B-A92F-4C2D5D100777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AFCC4FE-04EB-4C4F-A99E-FE920558A8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AFCC4FE-04EB-4C4F-A99E-FE920558A8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AFCC4FE-04EB-4C4F-A99E-FE920558A8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AFCC4FE-04EB-4C4F-A99E-FE920558A8B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,8 +8,6 @@ using System.IO;
 
 using System.Numerics;
 
-using System.Runtime.Serialization.Formatters.Binary;
-
 namespace audio_recorder.SaveRestore
 {
     public static class Saver
@@ -21,16 +19,28 @@ namespace audio_recorder.SaveRestore
         )
         {
             using(
-                var stream = new FileStream( _fileName, FileMode.Create )
+                var writer = new BinaryWriter(
+                    new FileStream( _fileName, FileMode.Create )
+                )
             )
             {
-                var formatter = new BinaryFormatter();
+                writer.Write( _signal.Length );
 
-                formatter.Serialize( stream, _signal );
+                writer.Write( _bufferSize );
 
-                formatter.Serialize( stream, _bufferSize );
+                foreach( var it in _signal )
+                    writer.Write( it );
 
             }
+        }
+
+        public static void Write(
+                this BinaryWriter _writer
+            ,   Complex _value
+        )
+        {
+            _writer.Write( _value.Real );
+            _writer.Write( _value.Imaginary );
         }
     }
 }
