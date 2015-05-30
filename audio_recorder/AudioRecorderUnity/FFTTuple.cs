@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AudioRecorderUnity
 {
-    public struct FFTTuple
+    public class FFTTuple
     {
         public Int32 BuffSize;
         public Complex[] FFT;

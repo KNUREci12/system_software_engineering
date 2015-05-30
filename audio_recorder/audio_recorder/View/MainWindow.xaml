@@ -49,6 +49,7 @@
             <Button x:Name="refreshButton" Grid.Row="1" Grid.Column="1" Content="refresh" HorizontalAlignment="Left" Margin="99,0,0,23" Width="75" Click="refreshButton_Click" Height="20" VerticalAlignment="Bottom" IsDefault="True" ToolTip="refresh"/>
 
             <Button x:Name="showNotesButton" Grid.Row="1" Grid.Column="1" Content="showNotes" HorizontalAlignment="Right" Margin="0,0,22,23" Width="75" Click="showNotesButton_Click" Height="20" VerticalAlignment="Bottom" ToolTip="showNotes"/>
+            <Button x:Name="show3D" Content="3D" Grid.Column="1" Margin="305,0,188,25" Grid.Row="1" Click="show3D_Click" Height="18" VerticalAlignment="Bottom"/>
 
         </Grid>
     </Grid>

@@ -99,6 +99,11 @@ namespace audio_recorder.Spectrum_Analyzer
             this.m_colorNumber = 0;
         }
 
+        public ZedGraph.CurveList GetCurveList()
+        {
+            return this.m_graphPanel.CurveList;
+        }
+
         private void ConstrColors()
         {
             m_colors =

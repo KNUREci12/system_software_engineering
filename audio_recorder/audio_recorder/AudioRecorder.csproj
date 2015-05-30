@@ -190,6 +190,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\logo.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AudioRecorderUnity\AudioRecorderUnityAdapter.csproj">
+      <Project>{2afcc4fe-04eb-4c4f-a99e-fe920558a8b1}</Project>
+      <Name>AudioRecorderUnityAdapter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

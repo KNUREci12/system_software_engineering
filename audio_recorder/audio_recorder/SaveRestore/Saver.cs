@@ -8,6 +8,13 @@ using System.IO;
 
 using System.Numerics;
 
+using ZedGraph;
+
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+
+using AudioRecorderUnity.FileType;
+
 namespace audio_recorder.SaveRestore
 {
     public static class Saver
@@ -19,28 +26,44 @@ namespace audio_recorder.SaveRestore
         )
         {
             using(
-                var writer = new BinaryWriter(
-                    new FileStream( _fileName, FileMode.Create )
-                )
+                var fileStream = new FileStream( _fileName, FileMode.Create )
             )
             {
-                writer.Write( _signal.Length );
+                var serializator = new BinaryFormatter();
 
-                writer.Write( _bufferSize );
+                serializator.Serialize( fileStream, fileType.Complex );
+
+                serializator.Serialize(fileStream, _signal.Length );
+
+                serializator.Serialize(fileStream, _bufferSize );
 
                 foreach( var it in _signal )
-                    writer.Write( it );
+                {
+                    serializator.Serialize(fileStream, it.Real);
+                    serializator.Serialize(fileStream, it.Imaginary);
+                }
 
             }
         }
 
-        public static void Write(
-                this BinaryWriter _writer
-            ,   Complex _value
+        public static void Save(
+                ZedGraph.CurveList _list
+            ,   String _fileName = @"file.fftAmpl"
         )
         {
-            _writer.Write( _value.Real );
-            _writer.Write( _value.Imaginary );
+            if( _list.Count == 0 )
+                throw new Exception( @"empty list." );
+
+            using (
+                var fileStream = new FileStream(_fileName, FileMode.Create)
+            )
+            {
+                var serializator = new BinaryFormatter();
+
+                serializator.Serialize(fileStream, _list );
+
+            }
         }
+
     }
 }

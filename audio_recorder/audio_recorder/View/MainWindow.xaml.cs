@@ -15,6 +15,10 @@ using ZedGraph;
 
 using audio_recorder.Spectrum_Analyzer;
 
+using System.IO;
+
+using System.Diagnostics;
+
 namespace audio_recorder
 {
     /// <summary>
@@ -125,6 +129,41 @@ namespace audio_recorder
 
             m_noteWindow = new NotesWindow( this );
             m_noteWindow.Show();
+        }
+
+        private void show3D_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var path = @"3d.fft";
+
+                SaveRestore.Saver.Save(
+                        this.DrawManager.GetCurveList()
+                    ,   path
+                );
+
+                using(
+                    var writer = new BinaryWriter(
+                        new FileStream( @"config.fftconfig", FileMode.Create )
+                    )
+                )
+                {
+                    writer.Write( path );
+                }
+
+                Process.Start( @"3drun.exe");
+
+
+            }
+            catch( Exception _exception )
+            {
+                #if DEBUG
+                    MessageBox.Show( _exception.Message );
+                #endif
+                #if RELEASE
+                    MessageBox.Show( @"Something went wrong. Please send report." );
+                #endif
+            }
         }
 
     }

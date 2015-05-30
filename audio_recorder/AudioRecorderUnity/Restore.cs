@@ -5,6 +5,11 @@ using System.Text;
 
 using System.IO;
 
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+
+using AudioRecorderUnity.FileType;
+
 namespace AudioRecorderUnity
 {
     public static class Restore
@@ -14,34 +19,50 @@ namespace AudioRecorderUnity
             )
         {
             using (
-                var reader = new BinaryReader(
-                    new FileStream(_fileName, FileMode.Open)
+                    var fileStream = new FileStream(_fileName, FileMode.Open )
                 )
-            )
             {
-                Int32 fftLength = reader.ReadInt32();
-                Int32 bufferSize = reader.ReadInt32();
+                var deserializator = new BinaryFormatter();
 
-                if (fftLength < 0 || bufferSize < 0)
-                    throw new Exception(@"uncorrect file restore.");
+                var fileType =
+                    (fileType)Enum.ToObject(
+                        typeof( fileType ), deserializator.Deserialize( fileStream )
+                    );
 
-                Complex[] fft = new Complex[fftLength];
+                if (fileType != fileType.Complex)
+                    return null;
 
-                for (int i = 0; i < fft.Length; ++i)
-                    fft[i] = reader.ReadComplex();
+                var length = (Int32)deserializator.Deserialize(fileStream);
+
+                var bufferSize = (Int32)deserializator.Deserialize(fileStream);
+
+                Complex[] fft = new Complex[length];
+
+                for (int i = 0; i < length; ++i)
+                {
+                    var real = (Double)deserializator.Deserialize(fileStream);
+                    var imag = (Double)deserializator.Deserialize(fileStream);
+
+                    fft[i] = new Complex(real, imag);
+                }
 
                 return new FFTTuple(bufferSize, fft);
+
             }
         }
 
-        public static Complex ReadComplex(
-            this BinaryReader _reader
+        public static ZedGraph.CurveList RestoreCurveList(
+            String _fileName
         )
         {
-            var real = _reader.ReadDouble();
-            var imag = _reader.ReadDouble();
-
-            return new Complex(real, imag);
+            using (
+                var fileStream = new FileStream(_fileName, FileMode.Open)
+            )
+            {
+                return
+                    new BinaryFormatter().Deserialize(fileStream) as ZedGraph.CurveList;
+            }
         }
+
     }
 }

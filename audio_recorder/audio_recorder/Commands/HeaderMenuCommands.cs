@@ -83,6 +83,9 @@ namespace audio_recorder.Command
                                         var fftSignal =
                                             SaveRestore.Restorer.RestoreFFt( fileDialog.FileName );
 
+                                        if( fftSignal == null )
+                                            throw new Exception( @"uncorrect file" );
+
                                         var mainWindow = param as MainWindow;
 
                                         DrawManager drawManager = mainWindow.DrawManager;
