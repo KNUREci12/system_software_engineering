@@ -135,25 +135,20 @@ namespace audio_recorder
         {
             try
             {
-                var path = @"3d.fft";
+                var path = @"3d.multifft";
 
                 SaveRestore.Saver.Save(
                         this.DrawManager.GetCurveList()
                     ,   path
                 );
 
-                using(
-                    var writer = new BinaryWriter(
-                        new FileStream( @"config.fftconfig", FileMode.Create )
-                    )
-                )
-                {
-                    writer.Write( path );
-                }
-
                 Process.Start( @"3drun.exe");
 
 
+            }
+            catch( System.IO.FileNotFoundException )
+            {
+                MessageBox.Show( @"can`t find 3drun.exe" );
             }
             catch( Exception _exception )
             {

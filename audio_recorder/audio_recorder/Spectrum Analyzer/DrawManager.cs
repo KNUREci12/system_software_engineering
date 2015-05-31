@@ -84,6 +84,24 @@ namespace audio_recorder.Spectrum_Analyzer
             DrawCurve( _signal.Item2, _signal.Item1, this.GetAvailableColor() );
         }
 
+        public void DrawCurve(
+            CurveList _curvesList
+        )
+        {
+            for( int i = 0; i < _curvesList.Count - 1; ++i )
+            {
+                PointPairList signalPoints = new PointPairList();
+
+                for( int j = 0; j < _curvesList[ i ].Points.Count - 1; ++j )
+                    signalPoints.Add( _curvesList[ i ][ j ] );
+
+                m_graphPanel.AddCurve(@"", signalPoints, _curvesList[i].Color, SymbolType.None);
+
+                m_graphPanel.AxisChange();
+                m_zedPanel.Invalidate();
+            }
+        }
+
         public Color GetAvailableColor()
         {
             if ( m_colorNumber >= m_colors.Length )

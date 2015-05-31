@@ -25,6 +25,15 @@ namespace audio_recorder.SaveRestore
             ,   String _fileName = @"file.fft"
         )
         {
+            if( _signal == null )
+            {
+                #if DEBUG
+                    System.Windows.MessageBox.Show( @"try to save empty spectrum.");
+                #endif
+
+                return;
+            }
+
             using(
                 var fileStream = new FileStream( _fileName, FileMode.Create )
             )
@@ -52,7 +61,13 @@ namespace audio_recorder.SaveRestore
         )
         {
             if( _list.Count == 0 )
-                throw new Exception( @"empty list." );
+            {
+                #if DEBUG
+                    System.Windows.MessageBox.Show(@"try to save empty graph.");
+                #endif
+
+                return;
+            }
 
             using (
                 var fileStream = new FileStream(_fileName, FileMode.Create)
