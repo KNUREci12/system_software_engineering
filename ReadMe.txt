@@ -1,1 +1,1 @@
-before running 3d mode copy "run_Data" and "run" to debug/release from spz_unity.
+before running 3d mode copy "spz_unity/3drun_Data" and "spz_unity/3drun.exe" to debug/release from spz_unity.
