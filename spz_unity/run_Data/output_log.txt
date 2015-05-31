@@ -1,0 +1,35 @@
+Initialize engine version: 5.0.2f1 (0b02744d4013)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 650 (ID=0xfc6)
+    Vendor:   NVIDIA
+    VRAM:     1986 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\AudioRecorderUnity.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\AudioRecorderUnity.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.Drawing.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.Drawing.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.Windows.Forms.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.Windows.Forms.dll into Unity Child Domain
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\ZedGraph.dll (this message is harmless)
+Loading C:\Users\admin\Documents\spz_unity\run_Data\Managed\ZedGraph.dll into Unity Child Domain
+- Completed reload, in  0.043 seconds
+desktop: 1920x1080 60Hz; virtual: 3600x1080 at -1680,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: C:\Users\admin\Documents\spz_unity\run_Data\Managed\System.Core.dll (this message is harmless)
+Fallback handler could not load library C:/Users/admin/Documents/spz_unity/run_Data/Mono/libc
+Fallback handler could not load library C:/Users/admin/Documents/spz_unity/run_Data/Mono/.\libc
+Fallback handler could not load library C:/Users/admin/Documents/spz_unity/run_Data/Mono/libc
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1c34 -> priority: 1 
