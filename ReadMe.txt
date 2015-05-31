@@ -1,1 +1,1 @@
-TODO: Сдесь можно оставить какую-то информацию важную для проекта. 
+before running 3d mode copy "run_Data" and "run" to debug/release from spz_unity.
