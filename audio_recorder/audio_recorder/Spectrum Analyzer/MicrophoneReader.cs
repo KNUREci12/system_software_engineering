@@ -9,7 +9,7 @@ using NAudio.Wave;
 
 namespace audio_recorder.Spectrum_Analyzer
 {
-    public class MicrophoneReader
+    public class MicrophoneReader : IDisposable
     {
         private WaveIn m_waveInput;
         public Int32 DiscretizationFrequency { get; private set; }
@@ -50,6 +50,31 @@ namespace audio_recorder.Spectrum_Analyzer
         {
             m_waveInput.StopRecording();
         }
+
+        #region IDispoce
+
+            private bool disposed = false;
+
+            public void Dispose()
+            {
+                Dispose(true);
+                GC.SuppressFinalize(this);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (disposed)
+                    return;
+
+                if (disposing)
+                {
+                    m_waveInput.Dispose();
+                }
+
+                disposed = true;
+            }
+
+        #endregion
 
     }
 }

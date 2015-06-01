@@ -31,7 +31,6 @@
                 <MenuItem Header="About" Command="{Binding AboutCommand}" />
             </MenuItem>
             <MenuItem Header="Settings" Command="{Binding SettingsCommand}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" >
-
             </MenuItem>
         </Menu>
         <Grid x:Name="MainGrid"  Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">

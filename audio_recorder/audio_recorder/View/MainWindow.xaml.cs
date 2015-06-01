@@ -93,18 +93,23 @@ namespace audio_recorder
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if( stopButton.IsEnabled )
-                return;
 
-            stopButton.IsEnabled = true;
+            try
+            {
+                MicrophoneReader = new MicrophoneReader();
+                MicrophoneReader.StartRead(DataAvailable, RecordingStopped);
 
-            MicrophoneReader = new MicrophoneReader();
-            MicrophoneReader.StartRead(DataAvailable, RecordingStopped);
+                stopButton.IsEnabled = true;
+                startButton.IsEnabled = false;
+            }
+            catch{}
+
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
             stopButton.IsEnabled = false;
+            startButton.IsEnabled = true;
             MicrophoneReader.StopRecording();
         }
 
@@ -142,8 +147,7 @@ namespace audio_recorder
                     ,   path
                 );
 
-                Process.Start( @"3drun.exe");
-
+                Process.Start( @"3drun.exe").WaitForExit();
 
             }
             catch( System.IO.FileNotFoundException )
